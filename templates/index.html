@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crud Flask</title>
+
+    <!-- Css -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Employee Manager</h1>
+        
+        <nav class="side-nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/add">Add</a></li>
+                <li><a href="/add">Edit</a></li>
+                <li><a href="/add">Delete</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p class="flask-notification">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+        <div class="add">
+            <h2>Add an employee easily?</h2>
+
+            <form action="/add" method="post" class="add-form">
+                <input type="text" name="name" id="name" placeholder="Name">
+                <input type="text" name="lastName" id="lastName" placeholder="Last name">
+                <input type="number" name="phone" id="phone" placeholder="Phone Number">
+                <input type="text" name="address" id="address" placeholder="Address">
+                
+                <button type="submit">Send</button>
+            </form>
+        </div>
+
+        
+        <div class="data">
+            <h2>Employees</h2>
+
+            <table class="employees-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                        <td class="table-id">{{ contact.0 }}</td>
+                        <td>{{ contact.1 }}</td>
+                        <td>{{ contact.2 }}</td>
+                        <td>{{ contact.3 }}</td>
+                        <td>{{ contact.4 }}</td>
+                        <td class="table-actions">
+                            <a href="/edit/{{contact.0}}">Edit</a>
+                            <a href="/delete/{{contact.0}}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>
